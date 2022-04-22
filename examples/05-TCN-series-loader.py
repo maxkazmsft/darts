@@ -68,8 +68,8 @@ ds = GenericShiftedDataset(
     target_series=train_series,
     covariates=train_series_cov,
     input_chunk_length=nlag,
-    output_chunk_length=npred,
-    shift=nlag,
+    output_chunk_length=nlag,
+    shift=npred,
     shift_covariates=False,
     max_samples_per_ts=None,
     covariate_type=CovariateType.PAST,
@@ -78,8 +78,10 @@ ds = GenericShiftedDataset(
 DEBUG from above shows that there are 4 and not 2 datapoints, and they're shifted by 1 instead of nlag (look at the 
 data coming from the second series). Output is below. 
 
+ds.__len__()
+Out[3]: 4
 ds[0]
-Out[12]: 
+Out[4]: 
 (array([[0., 0., 0., 0.],
         [1., 1., 1., 1.],
         [2., 2., 2., 2.],
@@ -100,13 +102,18 @@ Out[12]:
         [7., 7.],
         [8., 8.],
         [9., 9.]], dtype=float32),
- array([[10., 10., 10., 10.],
+ array([[ 5.,  5.,  5.,  5.],
+        [ 6.,  6.,  6.,  6.],
+        [ 7.,  7.,  7.,  7.],
+        [ 8.,  8.,  8.,  8.],
+        [ 9.,  9.,  9.,  9.],
+        [10., 10., 10., 10.],
         [11., 11., 11., 11.],
         [12., 12., 12., 12.],
         [13., 13., 13., 13.],
         [14., 14., 14., 14.]], dtype=float32))
 ds[1]
-Out[13]: 
+Out[5]: 
 (array([[0., 0., 0., 0.],
         [1., 1., 1., 1.],
         [2., 2., 2., 2.],
@@ -127,13 +134,18 @@ Out[13]:
         [7., 7.],
         [8., 8.],
         [9., 9.]], dtype=float32),
- array([[10., 10., 10., 10.],
+ array([[ 5.,  5.,  5.,  5.],
+        [ 6.,  6.,  6.,  6.],
+        [ 7.,  7.,  7.,  7.],
+        [ 8.,  8.,  8.,  8.],
+        [ 9.,  9.,  9.,  9.],
+        [10., 10., 10., 10.],
         [11., 11., 11., 11.],
         [12., 12., 12., 12.],
         [13., 13., 13., 13.],
         [14., 14., 14., 14.]], dtype=float32))
 ds[2]
-Out[14]: 
+Out[6]: 
 (array([[101., 101., 101., 101.],
         [102., 102., 102., 102.],
         [103., 103., 103., 103.],
@@ -154,13 +166,18 @@ Out[14]:
         [108., 108.],
         [109., 109.],
         [110., 110.]], dtype=float32),
- array([[111., 111., 111., 111.],
+ array([[106., 106., 106., 106.],
+        [107., 107., 107., 107.],
+        [108., 108., 108., 108.],
+        [109., 109., 109., 109.],
+        [110., 110., 110., 110.],
+        [111., 111., 111., 111.],
         [112., 112., 112., 112.],
         [113., 113., 113., 113.],
         [114., 114., 114., 114.],
         [115., 115., 115., 115.]], dtype=float32))
 ds[3]
-Out[15]: 
+Out[7]: 
 (array([[100., 100., 100., 100.],
         [101., 101., 101., 101.],
         [102., 102., 102., 102.],
@@ -181,15 +198,16 @@ Out[15]:
         [107., 107.],
         [108., 108.],
         [109., 109.]], dtype=float32),
- array([[110., 110., 110., 110.],
+ array([[105., 105., 105., 105.],
+        [106., 106., 106., 106.],
+        [107., 107., 107., 107.],
+        [108., 108., 108., 108.],
+        [109., 109., 109., 109.],
+        [110., 110., 110., 110.],
         [111., 111., 111., 111.],
         [112., 112., 112., 112.],
         [113., 113., 113., 113.],
         [114., 114., 114., 114.]], dtype=float32))
-        
-Also, line 72 in darts/utils/data/shifted_dataset.py has the following settings applied:
-output_chunk_length=nlag, (instead of npred)
-shift=npred, (instead of nlag)        
 '''
 
 '''
