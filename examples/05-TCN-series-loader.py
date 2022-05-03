@@ -37,6 +37,8 @@ def make_array(shape_tuple):
     array = np.ones(shape=shape_tuple).T
     for i in range(0,shape_tuple[0]):
         array[:,i]*=i
+        for j in range(1,shape_tuple[1]):
+            array[j, i] += j
 
     return array.T
 
@@ -71,9 +73,11 @@ ds = GenericShiftedDataset(
     output_chunk_length=nlag,
     shift=npred,
     shift_covariates=False,
-    max_samples_per_ts=None,
+    # max_samples_per_ts=None,
+    max_samples_per_ts=1,
     covariate_type=CovariateType.PAST,
 )
+print('sample ds loaded breakpoint')
 '''
 DEBUG from above shows that there are 4 and not 2 datapoints, and they're shifted by 1 instead of nlag (look at the 
 data coming from the second series). Output is below. 
